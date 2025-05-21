@@ -66,4 +66,4 @@ prioritizes strength, low weight, and ease of assembly in the field. Detailed mo
 drawings, and documentation are maintained to ensure consistent fabrication and  
 support future revisions.
 
-[Mechanical Repository](https://github.com/LeemanGeophysicalLLC/NSSL_EFM_Mechanical)
+* [Mechanical Repository](https://github.com/LeemanGeophysicalLLC/NSSL_EFM_Mechanical)
