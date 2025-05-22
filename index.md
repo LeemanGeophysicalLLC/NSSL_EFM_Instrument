@@ -20,3 +20,7 @@ lightweight foams—support and protect the system under demanding conditions.
 This documentation site includes user guides, design files, firmware references, and  
 mechanical documentation to support continued development, deployment, and analysis  
 of the EFM system.
+
+## Subsystem Documentation
+
+* [Motor Control](motor_control/motor_control.md)
