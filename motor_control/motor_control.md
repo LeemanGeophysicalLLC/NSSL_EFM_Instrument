@@ -70,3 +70,142 @@ Each log entry is 16 bytes and recorded approximately every 10 seconds.
 | Battery (mV)          | 2    | `uint16_t`  | Battery voltage                                   |
 | Flags                 | 1    | `uint8_t`   | Fault or status flags (reserved for future use)  |
 | Reserved              | 3    | —           | Reserved/padding                                 |
+
+## Firmware Checkout Procedure
+This checklist can be used to verify proper operation and no regressions after the device firmware has been modified.
+
+
+Tests are designed to verify that each serial command behaves correctly, including:
+- Argument count validation
+- Range enforcement
+- Settings persistence
+- Parser robustness to malformed input
+
+### Test Outcome Legend
+
+- (success expected) → Command should return `OK`
+- (failure expected) → Command should return `!`
+- (observe) → No crash or instability; parser must remain functional
+
+### SETRPM <value> (Valid range: 60–300)
+
+| Test Case | Expected Outcome |
+|-----------|------------------|
+| `SETRPM` | (failure expected) – too few arguments |
+| `SETRPM 100 200` | (failure expected) – too many arguments |
+| `SETRPM 20` | (failure expected) – below valid range |
+| `SETRPM 400` | (failure expected) – above valid range |
+| `SETRPM 150` | (success expected) – valid RPM set |
+| Power cycle, then `SHOW` | (success expected) – verify `setpoint_rpm = 150` |
+| `SETRPM qwertyuiopasdfghjklzxcvbnm1234567890` | (failure expected) – invalid input format |
+
+### SETKP, SETKI, SETKD <value> (Valid range: 0–100)
+
+Each command should be tested independently. Example below is for `SETKP`.
+
+| Test Case | Expected Outcome |
+|-----------|------------------|
+| `SETKP` | (failure expected) – too few arguments |
+| `SETKP 1 2` | (failure expected) – too many arguments |
+| `SETKP -1` | (failure expected) – below valid range |
+| `SETKP 101` | (failure expected) – above valid range |
+| `SETKP 0.05` | (success expected) – gain accepted |
+| Power cycle, then `SHOW` | (success expected) – verify value persisted |
+| `SETKP ???!!!@@@###` | (failure expected) – invalid input format |
+
+Repeat for:
+- `SETKI`
+- `SETKD`
+
+### SETCURRENTLIM <milliamps> (Valid range: 100–1000)
+
+| Test Case | Expected Outcome |
+|-----------|------------------|
+| `SETCURRENTLIM` | (failure expected) – too few arguments |
+| `SETCURRENTLIM 1 2 3` | (failure expected) – too many arguments |
+| `SETCURRENTLIM 50` | (failure expected) – below range |
+| `SETCURRENTLIM 1500` | (failure expected) – above range |
+| `SETCURRENTLIM 500` | (success expected) – valid current limit |
+| Power cycle, then `SHOW` | (success expected) – verify value persisted |
+| `SETCURRENTLIM spamspamspamspam` | (failure expected) – non-numeric input |
+
+### SETCUTOFF <0|1>
+
+| Test Case | Expected Outcome |
+|-----------|------------------|
+| `SETCUTOFF` | (failure expected) – too few arguments |
+| `SETCUTOFF 1 2` | (failure expected) – too many arguments |
+| `SETCUTOFF 2` | (failure expected) – invalid value |
+| `SETCUTOFF -1` | (failure expected) – invalid value |
+| `SETCUTOFF 0` | (success expected) – disable cutoff |
+| Power cycle, then `SHOW` | (success expected) – verify persisted |
+| `SETCUTOFF 1` | (success expected) – enable cutoff |
+| Power cycle, then `SHOW` | (success expected) – verify persisted |
+| `SETCUTOFF lolnope` | (failure expected) – non-numeric input |
+
+### SETRESTART <0|1>
+
+Same validation process as `SETCUTOFF`.
+
+### SHOW
+
+| Test Case | Expected Outcome |
+|-----------|------------------|
+| `SHOW` | (success expected) – prints current settings in readable format |
+
+### DUMPLOG
+
+| Test Case | Expected Outcome |
+|-----------|------------------|
+| `DUMPLOG` | (success expected) – prints data log (empty or not) |
+
+### RESETCONFIG
+
+| Test Case | Expected Outcome |
+|-----------|------------------|
+| `RESETCONFIG` | (success expected) – settings reset to defaults, log cleared |
+| Power cycle, then `SHOW` | (success expected) – default settings confirmed |
+| Verify `power_cycle_count == 1` | (success expected) – after reset |
+
+### HELP
+
+| Test Case | Expected Outcome |
+|-----------|------------------|
+| `HELP` | (success expected) – lists available commands and usage |
+
+
+### Junk Input Stress Test
+
+| Test Case | Expected Outcome |
+|-----------|------------------|
+| `AJSDHASKJDH1238127312##@@!!@!!()()()()_+_)(*&^%$#@!~` | (observe) – no crash; next command works |
+| `LONGSTRINGOFNONCOMMANDSANDCHARSANDNUMBERS1234567890...` | (observe) – no buffer overflow |
+| Send partially typed command | (observe) – system should not crash or become unresponsive |
+
+### Power Cycle Verification
+
+After each setting command that returns `OK`:
+
+| Step | Expected Outcome |
+|------|------------------|
+| Power off and wait 10 seconds | - |
+| Power on and run `SHOW` | (success expected) – changed setting persisted |
+| Confirm `power_cycle_count` incremented | (success expected) |
+
+### Over Current Protection and Restart Functionality
+| Step | Expected Outcome |
+|------|------------------|
+| With the current limit set to 100 mA stall the motor and verify shutdown executes | (success expected) |
+| With the restart function enabled the motor should restart in approximately 1 minute | (success expected) |
+| With the restart function disabled the system should stay shutdown - wait for 5 minutes to verify | (success expected) |
+
+## RPM Verification
+| Step | Expected Outcome |
+|------|------------------|
+| Set the RPM to 210 and verify speed is reached within 60 seconds and maintained | (success expected) |
+| Decrease the voltage driving the system by 2 VDC and verify the RPM recovers within 60 seconds | (success expected) |
+| Reset the driving voltage and verify the RPM recovers within 60 seconds | (success expected) |
+
+### Cleanup
+After completing the firmware testing, ALWAYS reset the system to the defaults for operation. Adjust any custom
+settings as desired.
