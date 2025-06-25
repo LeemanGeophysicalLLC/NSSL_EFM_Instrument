@@ -2,75 +2,97 @@
 
 ## Serial Command Reference
 
-Commands are issued via serial terminal. All inputs are plain ASCII and case-insensitive. 
-Parameters are space-separated. All commands must be followed by `\r\n`. Valid commands are 
-acknowledged with `OK`. Invalid commands are acknowledged with `!` and may include an error 
-message. All connections are to be made at 9600 baud through the on-board mini-USB port.
+Commands are issued via serial terminal. All inputs are plain ASCII and case-insensitive.  
+Parameters are space-separated. All commands must be followed by `\r\n`.  
+Valid commands are acknowledged with `OK`. Invalid commands return `!`.  
+All connections are to be made at 9600 baud through the onboard mini-USB port.
+
+---
 
 ### Settings Control
 
-| Command                      | Description                                         | Valid Range           | Example             |
-|------------------------------|-----------------------------------------------------|------------------------|---------------------|
-| `SETRPM <rpm - integer>`     | Set the PID target RPM                             | 180-240                 | `SETRPM 120`        |
-| `SETKP <value - float>`      | Set the PID Kp value                               | 0.0–100.0              | `SETKP 0.5`         |
-| `SETKI <value - float>`      | Set the PID Ki value                               | 0.0–100.0              | `SETKI 0.07`        |
-| `SETKD <value - float>`      | Set the PID Kd value                               | 0.0–100.0              | `SETKD 0.0`         |
-| `SETCURRENTLIM <mA - int>`   | Set motor current limit in mA                      | 10–3000               | `SETCURRENTLIM 300` |
-| `SETRESTART <0|1>`           | Enable/disable auto-restart after stall detection  | 0 = off, 1 = on        | `SETRESTART 1`      |
+| Command                        | Description                                         | Valid Range            | Example               |
+|-------------------------------|-----------------------------------------------------|-------------------------|-----------------------|
+| `SETRPM <rpm>`                | Set the PID target RPM                             | 60–300                  | `SETRPM 150`          |
+| `SETKP <value>`               | Set the PID Kp value                               | 0.0–100.0               | `SETKP 0.5`           |
+| `SETKI <value>`               | Set the PID Ki value                               | 0.0–100.0               | `SETKI 0.07`          |
+| `SETKD <value>`               | Set the PID Kd value                               | 0.0–100.0               | `SETKD 0.0`           |
+| `SETCURRENTLIM <mA>`         | Set motor current limit in mA                      | 100–1000                | `SETCURRENTLIM 300`   |
+| `SETCUTOFF <0|1>`            | Enable (1) or disable (0) current cutoff protection| 0 = off, 1 = on         | `SETCUTOFF 1`         |
+| `SETRESTART <0|1>`           | Enable (1) or disable (0) auto-restart on stall    | 0 = off, 1 = on         | `SETRESTART 1`        |
+
+---
 
 ### Diagnostics and Output
 
-| Command   | Description                            |
-|-----------|----------------------------------------|
-| `SHOW`    | Print all current configuration values |
-| `DUMP`    | Dump logged data in reverse order      |
+| Command     | Description                            |
+|------------|----------------------------------------|
+| `SHOW`     | Print current configuration and status |
+| `DUMPLOG`  | Dump all logged data in CSV format     |
+
+---
 
 ### Maintenance
 
-| Command       | Description                                 |
-|---------------|---------------------------------------------|
-| `RESETCONFIG` | Reset FRAM settings to factory defaults     |
+| Command       | Description                                  |
+|---------------|----------------------------------------------|
+| `RESETCONFIG` | Reset all settings to factory defaults and clear log |
 
 ---
 
 ## Firmware Details
 
-### FRAM Memory Map (0x0000 – 0x03E7 Reserved)
+### FRAM Memory Map (0x0000 – 0x03EF Reserved)
 
-The first 1000 bytes of FRAM are reserved for settings and persistent metadata.
+The first ~1 KB of FRAM is reserved for persistent configuration and metadata.
 
-| Offset | Size | Name                | Type       | Description                                      |
-|--------|------|---------------------|------------|--------------------------------------------------|
-| 0x0000 | 4    | Magic Number        | `uint32_t` | Constant value (e.g., `0xEFABEFAB`) used to      |
-|        |      |                     |            | detect uninitialized memory                      |
-| 0x0004 | 2    | Format Version      | `uint16_t` | Structure version, for future compatibility      |
-| 0x0006 | 2    | Power Cycle Count   | `uint16_t` | Incremented on each boot                         |
-| 0x0008 | 2    | Log Head Index      | `uint16_t` | Index of the next available log entry            |
-| 0x000A | 2    | Current Limit (mA)  | `uint16_t` | Maximum allowed motor current before shutdown    |
-| 0x000C | 4    | PID Kp              | `float`    | Proportional gain                                |
-| 0x0010 | 4    | PID Ki              | `float`    | Integral gain                                    |
-| 0x0014 | 4    | PID Kd              | `float`    | Derivative gain                                  |
-| 0x0018 | 2    | Setpoint RPM        | `uint16_t` | Target RPM for the PID controller                |
-| 0x001A | 1    | Restart Enabled     | `uint8_t`  | 0 = disable automatic restart, 1 = enable        |
-| 0x001B | —    | Reserved            | —          | Remaining bytes (0x001B–0x03E7) reserved for     |
-|        |      |                     |            | future use                                       |
+| Offset | Size | Name                  | Type       | Description                                      |
+|--------|------|-----------------------|------------|--------------------------------------------------|
+| 0x0000 | —    | MotorControllerSettings | —        | Packed structure (see fields below)              |
+
+Structure layout:
+
+| Field                | Size | Type       | Description                                         |
+|----------------------|------|------------|-----------------------------------------------------|
+| `power_cycle_count`  | 2    | `uint16_t` | Number of times the device has booted               |
+| `log_head_index`     | 2    | `uint16_t` | Index of the next log entry                         |
+| `current_limit_ma`   | 2    | `uint16_t` | Maximum motor current before shutdown (mA)          |
+| `pid_kp`             | 4    | `float`    | Proportional PID gain                               |
+| `pid_ki`             | 4    | `float`    | Integral PID gain                                   |
+| `pid_kd`             | 4    | `float`    | Derivative PID gain                                 |
+| `setpoint_rpm`       | 2    | `uint16_t` | Target motor RPM                                    |
+| `restart_enabled`    | 1    | `uint8_t`  | Auto-restart on stall (0 = off, 1 = on)             |
+| `current_cutoff_enabled` | 1 | `uint8_t`  | Current cutoff protection (0 = off, 1 = on)         |
 
 ---
 
-### Log Entry Format (starting at 0x03E8)
+### Log Entry Format (starting at 0x03F0)
 
-Each log entry is 16 bytes and recorded approximately every 10 seconds.
+Each log entry is 16 bytes and stored in a circular buffer.
 
-| Field                 | Size | Type        | Description                                      |
-|-----------------------|------|-------------|--------------------------------------------------|
-| Timestamp (s)         | 4    | `uint32_t`  | Seconds since boot                               |
-| RPM                   | 2    | `int16_t`   | Current instrument RPM                           |
-| Current (mA)          | 2    | `uint16_t`  | Motor current draw                               |
-| Temperature (degC×10) | 2    | `int16_t`   | Controller temperature in degrees Celsius × 10   |
-| Battery (mV)          | 2    | `uint16_t`  | Battery voltage                                   |
-| Flags                 | 1    | `uint8_t`   | Fault or status flags (reserved for future use)  |
-| Reserved              | 3    | —           | Reserved/padding                                 |
+| Field                 | Size | Type        | Description                                       |
+|-----------------------|------|-------------|---------------------------------------------------|
+| `timestamp_s`         | 4    | `uint32_t`  | Timestamp (seconds since boot)                   |
+| `rpm`                 | 2    | `int16_t`   | Current measured RPM                             |
+| `current_ma`          | 2    | `uint16_t`  | Motor current (mA)                               |
+| `temp_x10`            | 2    | `int16_t`   | Controller temperature in °C ×10                 |
+| `battery_mv`          | 2    | `uint16_t`  | Battery voltage (mV)                             |
+| `power_cycles`        | 2    | `uint16_t`  | Power cycle count at time of log                 |
+| `flags`              | 1    | `uint8_t`   | Reserved for future use                          |
+| `reserved[2]`        | 2    | —           | Padding / future expansion                       |
 
+---
+
+### Logging Behavior
+
+- A new log entry is written every 60 seconds.
+- When the log fills up (~437 entries), it wraps around to the beginning.
+- Logs can be cleared with `RESETCONFIG`.
+
+---
+
+**Note:** This documentation matches **firmware version 1.0** as of the latest revision. See `SHOW` output for runtime verification.
+ 
 ## Firmware Checkout Procedure
 This checklist can be used to verify proper operation and no regressions after the device firmware has been modified.
 
