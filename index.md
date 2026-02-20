@@ -21,6 +21,8 @@ This documentation site includes user guides, design files, firmware references,
 mechanical documentation to support continued development, deployment, and analysis  
 of the EFM system.
 
-## Subsystem Documentation
+## Parts List
+* [Parts list for subcomponents and major elements](parts_listings.md)
 
+## Subsystem Documentation
 * [Motor Control](motor_control/motor_control.md)
