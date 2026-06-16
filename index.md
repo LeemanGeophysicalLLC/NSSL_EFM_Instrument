@@ -26,6 +26,10 @@ of the EFM system.
 
 ## Subsystem Documentation
 * [Motor Control](motor_control/motor_control.md)
+* [Analog Charge Amp](analog/analog.md)
+* [Orientation Recorder](orientation/orientation.md)
+* [Rotating Recorder](rotating/rotating.md)
+* [Satellite Tracker](tracker/tracker.md)
 
 ## Repositories
 
