@@ -26,3 +26,29 @@ of the EFM system.
 
 ## Subsystem Documentation
 * [Motor Control](motor_control/motor_control.md)
+
+## Repositories
+
+### Motor Control
+* [Firmware](https://github.com/LeemanGeophysicalLLC/NSSL_EFM_Motor_Control_Firmware)
+* [PCB](https://github.com/LeemanGeophysicalLLC/NSSL_EFM_Motor_Control_PCB)
+
+### Rotating Electronics
+* [Firmware](https://github.com/LeemanGeophysicalLLC/NSSL_EFM_Rotating_Firmware)
+* [PCB](https://github.com/LeemanGeophysicalLLC/NSSL_EFM_Rotating_PCB)
+
+### Orientation Electronics
+* [Firmware](https://github.com/LeemanGeophysicalLLC/NSSL_EFM_Orientation_Firmware)
+* [PCB](https://github.com/LeemanGeophysicalLLC/NSSL_EFM_Orientation_PCB)
+
+### Tracker
+* [Firmware](https://github.com/LeemanGeophysicalLLC/NSSL_EFM_Tracker_Firmware)
+* [PCB](https://github.com/LeemanGeophysicalLLC/NSSL_EFM_Tracker_PCB)
+
+### Analog (charge amplifier)
+* [Firmware](https://github.com/LeemanGeophysicalLLC/NSSL_EFM_Analog_Firmware)
+* [PCB](https://github.com/LeemanGeophysicalLLC/NSSL_EFM_Analog_PCB)
+
+### Other
+* [Documentation (this repo)](https://github.com/LeemanGeophysicalLLC/NSSL_EFM_Instrument)
+* [Mechanical](https://github.com/LeemanGeophysicalLLC/NSSL_EFM_Mechanical)

@@ -12,21 +12,21 @@
 * **2x** [Ball Bearing 8mm x 22mm x 7mm (Amazon B07XD6PLV1)](https://www.amazon.com/dp/B07XD6PLV1?ref=fed_asin_title&th=1)
 * **2x** [1/4"-20 Nylon Hex Nut (McMaster 94812A700)](https://www.mcmaster.com/94812A700-94812A116/)
 * **2x** [1/4"-20 x 1-1/8" Nylon Socket Head Screw (McMaster 95868A739)](https://www.mcmaster.com/95868A739-95868A539/)
-* **2x** [5/16" Stainless Flat Washer (McMaster 92141A030)](https://www.mcmaster.com/92141A030/)
+* **1x** [5/16" Stainless Flat Washer (McMaster 92141A030)](https://www.mcmaster.com/92141A030/)
 * **1x** [5/16" Nylon Lock Nut (McMaster 91831A030)](https://www.mcmaster.com/91831A030/)
 * **1x** Delrin Hub Insert LH Thread
-* **3x** [#6-32 x 3/8" Nylon Socket Head Screw (McMaster 95868A296)](https://www.mcmaster.com/95868A296-95868A146/)
+* **3x** [Nylon Pan Head Screws Phillips, 6-32 Thread, 3/8" Long (McMaster 94735A729)](https://www.mcmaster.com/94735A729/)
 * **1x** LH-RH Hub Shaft
 
 ### Motor Module
 * **1x** [Motor 20.4:1 Metal Gearmotor 25Dx65L mm HP 12V with 48 CPR Encoder (Pololu 4843)](https://www.pololu.com/product/4843)
 * **1x** Motor Module 3D Print
-* **1x** Motor Coupler 3D Print
+* **1x** Motor Coupler Metal 3D Print
 * **1x** [Pull Pin Switch - through hole (Leeman Geophysical 10-0000011)](https://leemangeophysical.com/product/pull-pin-switch/)
 * **1x** NSSL EFM Motor Control PCBA Rev 1.2 (Leeman Geophysical 7-0000248)
 * **2x** [9v Battery Clip with Side Exit Rigid Top](https://www.amazon.com/Battery-Connector-Plastic-Experiment-Equipment/dp/B08SL9X2YC)
-* **6x** [#4-40 x 1/4" Thread Forming Screw (McMaster 99461A110)](https://www.mcmaster.com/99461A110/)
-* **4x** [#4-40 x 3/4" Thread Forming Screw (McMaster 99461A150)](https://www.mcmaster.com/99461A150/)
+* **6x** [#4 x 1/4" Thread Forming Screw (McMaster 99461A110)](https://www.mcmaster.com/99461A110/)
+* **4x** [#4 x 3/4" Thread Forming Screw (McMaster 99461A150)](https://www.mcmaster.com/99461A150/)
 * **1x** [Extra Long 1/4" x 3" Quick-Release Pin (McMaster 98404A150)](https://www.mcmaster.com/98404A150/)
 * **2x** [M3 x 0.5 mm Flat Head Screw (McMaster 92010A118)](https://www.mcmaster.com/92010A118/)
 * **1x** [#4-40 x 1/4" Stainless Set Screw (McMaster 92311A106)](https://www.mcmaster.com/92311A106/)
@@ -45,10 +45,10 @@
 * **2x** [Ball Bearing 8mm x 22mm x 7mm (Amazon B07XD6PLV1)](https://www.amazon.com/dp/B07XD6PLV1?ref=fed_asin_title&th=1)
 * **2x** [1/4"-20 Nylon Hex Nut (McMaster 94812A700)](https://www.mcmaster.com/94812A700-94812A116/)
 * **2x** [1/4"-20 x 1-1/8" Nylon Socket Head Screw (McMaster 95868A739)](https://www.mcmaster.com/95868A739-95868A539/)
-* **2x** [5/16" Stainless Flat Washer (McMaster 92141A030)](https://www.mcmaster.com/92141A030/)
+* **1x** [5/16" Stainless Flat Washer (McMaster 92141A030)](https://www.mcmaster.com/92141A030/)
 * **1x** [5/16" Nylon Lock Nut (McMaster 91831A030)](https://www.mcmaster.com/91831A030/)
 * **1x** Delrin Hub Insert RH Thread
-* **3x** [#6-32 x 3/8" Nylon Socket Head Screw (McMaster 95868A296)](https://www.mcmaster.com/95868A296-95868A146/)
+* **3x** [Nylon Pan Head Screws Phillips, 6-32 Thread, 3/8" Long (McMaster 94735A729)](https://www.mcmaster.com/94735A729/)
 * **1x** RH-RH Hub Shaft
 
 
@@ -61,8 +61,8 @@
 * **1x** [9DoF IMU Breakout - ICM-20948 Qwiic (Sparkfun SEN-15335)](https://www.sparkfun.com/sparkfun-9dof-imu-breakout-icm-20948-qwiic.html)
 * **2x** [Flexible Qwiic Cable - 50mm (Sparkfun PRT-17260)](https://www.sparkfun.com/flexible-qwiic-cable-50mm.html)
 * **1x** AS5600 Breakout PCBA Rev 1.0 (Leeman Geophysical 7-0000250)
-* **14x** [#4-40 x 1/4" Thread Forming Screw (McMaster 99461A110)](https://www.mcmaster.com/99461A110/)
-* **4x** [#4-40 x 3/4" Thread Forming Screw (McMaster 99461A150)](https://www.mcmaster.com/99461A150/)
+* **14x** [#4 x 1/4" Thread Forming Screw (McMaster 99461A110)](https://www.mcmaster.com/99461A110/)
+* **4x** [#4 x 3/4" Thread Forming Screw (McMaster 99461A150)](https://www.mcmaster.com/99461A150/)
 * **1x** [Extra Long 1/4" x 3" Quick-Release Pin (McMaster 98404A150)](https://www.mcmaster.com/98404A150/)
 
 ### Magnet and Mount
@@ -75,12 +75,31 @@ be measured. This is what determines shaft position in the orientation paddle da
 
 ## Data Sphere
 * **1x** NSSL EFM Rotating Digital Electronics PCBA Rev 2.1 (Leeman Geophysical 7-0000285)
+* **1x** NSSL EFM Rotating Analog Electronics Rev 2.1 PCBA (Leeman Geophysical 7-0000037)
+* **1x** [Stainless Steel Phillips Flat Head Screw M5 x 0.8 mm Thread Size, 16 mm Long (McMaster 92010A326)](https://www.mcmaster.com/92010A326/)
 
 ## Power Sphere
+* **1x** Battery Holder Base
+* **1x** Battery Holder Lid
+* **1x** 9V Battery Clip
+* **1x** Velcro Strap
+* **2x** Battery insulating foam
+* **4x** #4 x 1/4" Thread-Forming Screws Stainless Steel[(McMaster 99461A110)](https://www.mcmaster.com/99461A110/)
+* **1x** Stainless Steel Phillips Flat Head Screw M5 x 0.8 mm Thread Size, 16 mm Long [(McMaster 92010A326)](https://www.mcmaster.com/92010A326/)
+
+## Instrument Body
+* **1x** Fiberglass rod and spheres (NSSL Provided)
+* **1x** Top PETG-CF Reinforcement 3D Print
+* **1x** Bottom PETG-CF Reinforcement 3D Print
 
 ## Other
 
 ### Center of Rod Support and Light
 * **1x** Top Support for Center Ring 3D Print
 * **1x** Bottom Support for Center Ring 3D Print
-* 
+* **1x** GPS antenna
+* **1x** GPS antenna cable
+* **1x** GPS antenna holder 3D Print
+* **1x** 100mm SMPL Cable [Leeman Geophysical ]()
+* **4x** #4x3/4" Thread-Forming Screws Stainless Steel[(McMaster 99461A150)](https://www.mcmaster.com/99461A150/)
+* **As Required** Stainless Steel Shims 1/2" ID x 3/4" OD, 0.01" Thick[(McMaster 99040A810)](https://www.mcmaster.com/99040A810/)
